@@ -1,6 +1,6 @@
 import TodoListItem from "./TodoListItem";
 
-function TodoList({todoList, onCompleteTodo}) {
+function TodoList({ todoList, onCompleteTodo, onUpdateTodo}) {
     const filteredTodoList = todoList.filter((todo) => !todo.isCompleted);
     const numOfTodos = filteredTodoList.length;
 
@@ -11,7 +11,7 @@ function TodoList({todoList, onCompleteTodo}) {
     return (
         <ul>
             {filteredTodoList.map((todo) => (
-            <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo}/>
+            <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo} onUpdateTodo={onUpdateTodo}/>
             ))}
         </ul>
     );
