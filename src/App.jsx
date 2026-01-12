@@ -29,7 +29,7 @@ function App() {
   const updateTodo = (editedTodo) => {
     const updatedTodos = todoList.map((todo) => {
       if (todo.id == editedTodo.id) {
-        return {...todo, title: editedTodo.title};
+        return {...editedTodo}; // changed it to return the whole editedTodo
       }
       return todo;
     });
