@@ -204,7 +204,7 @@ function App() {
             isCompleted: false,
           };
 
-          if(todo.isCompleted){
+          if(!todo.isCompleted){
             todo.isCompleted = false;
           }
 
