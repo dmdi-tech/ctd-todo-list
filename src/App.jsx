@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = ('');
+  const [errorMessage, setErrorMessage] = useState(''); // fixed to include hook
   const [isSaving, setIsSaving] = useState(false);
 
   const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
@@ -40,7 +40,7 @@ function App() {
       setIsSaving(true);
       const resp = await fetch(url, options);
 
-      if(!resp.ok) throw new Error(resp.message);
+      if(!resp.ok) throw new Error(errorMessage);
 
       const { records } = await resp.json();
 
@@ -70,10 +70,10 @@ function App() {
       return todo;
     });
 
+    const originalUpdatedTodos = todoList.find((todo) => todo.id === id);
+
     // updated todoList state with updatedTodos
     setTodoList(updatedTodos);
-
-    const originalUpdatedTodos = todoList.find((todo) => todo.id === id);
 
     const payload = {
         records: [
@@ -101,17 +101,15 @@ function App() {
 
       const resp = await fetch(url, options);
 
-      if(!resp.ok) throw new Error(resp.message);
+      if(!resp.ok) throw new Error(errorMessage);
       
     } catch(error) {
       console.log(error.message);
 
       setErrorMessage(`${error.message}. Reverting completing todos....`);
 
-      const revertedTodos = originalUpdatedTodos.map((todo) => {
-        if(todo.id === originalUpdatedTodos.id) {
-          return originalUpdatedTodos;
-        }
+      const revertedTodos = todoList.map((todo) => {
+        todo.id === originalUpdatedTodos.id ? originalUpdatedTodos : todo
       });
 
       setTodoList(revertedTodos);
@@ -128,9 +126,9 @@ function App() {
       return todo;
     });
 
-    setTodoList(updatedTodos);
-
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
+
+    setTodoList(updatedTodos);
 
     const payload = {
         records: [
@@ -158,19 +156,17 @@ function App() {
 
       const resp = await fetch(url, options);
 
-      if(!resp.ok) throw new Error(resp.message);
+      if(!resp.ok) throw new Error(errorMessage);
 
     } catch(error) {
       console.log(error.message);
 
       setErrorMessage(`${error.message}. Reverting todo....`);
       
-      const revertedTodos = originalTodo.map((todo) => {
-        if(todo.id === originalTodo.id) {
-          return originalTodo;
-        }
-      });
-      
+      const revertedTodos = todoList.map((todo) =>
+        todo.id === originalTodo.id ? originalTodo : todo        
+      );
+
       setTodoList([...revertedTodos]);
     } finally {
       setIsSaving(false);
@@ -192,7 +188,7 @@ function App() {
         const resp = await fetch(url, options);
 
         if(!resp.ok) {
-          throw new Error(resp.message);
+          throw new Error(errorMessage);
         }
 
         const response = await resp.json();
@@ -201,7 +197,7 @@ function App() {
           const todo = {
             title: record.fields.title,
             id: record.id,
-            isCompleted: false,
+            isCompleted: record.fields.isCompleted ?? false,
           };
 
           if(!todo.isCompleted){
