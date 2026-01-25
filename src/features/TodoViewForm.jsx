@@ -1,10 +1,17 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const preventDefault = (event) => {
     event.preventDefault();
 };
 
 function TodoViewForm({ sortDirection, setSortDirection, sortField, setSortField, queryString, setQueryString }) {
+    const [localQueryString, setLocalQueryString] = useState(queryString);
+
+    useEffect(() => {
+        const debounce = setTimeout(() => setQueryString(localQueryString), 500);
+        return () => clearTimeout(debounce);
+    },[localQueryString, setQueryString]);
+
     return (
         <form onSubmit={preventDefault}>
             <div>
@@ -13,15 +20,15 @@ function TodoViewForm({ sortDirection, setSortDirection, sortField, setSortField
                         id="searchTodos"
                         type="text"
                         onChange={(event) => {
-                            setQueryString(event.target.value);
+                            setLocalQueryString(event.target.value);
                         }}
-                        value={queryString}
+                        value={localQueryString}
                     />  
                 </label>
                 
                 <button
                     type="button"
-                    onClick={() => {setQueryString("")}}
+                    onClick={() => {setLocalQueryString("")}}
                 >
                     Clear
                 </button>
