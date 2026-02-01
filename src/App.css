@@ -1,0 +1,15 @@
+* { 
+    font-family: "MS ui gothic" 
+}
+
+#root {
+    color: #484848;
+    line-height: 1.0;
+    font-family: "MS ui gothic", serif;
+    --dk-color:#423c38;
+    --mid-color:#b4d4b8;
+    --lt-color:#faf5f2;
+    --dkest-color:#423c38;
+    --accent:#423c38;
+    --shadow-1: #423c387e;
+}
