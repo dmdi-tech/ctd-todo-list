@@ -1,0 +1,23 @@
+.title, h1 {
+    font-size: 45px;
+    font-weight: 900;
+    font-style: italic;
+}
+
+.container {
+    display: flex;
+	flex-direction: column;
+    padding: .45em 2.65em 3em;
+    max-width:900px;
+    background-color:var(--lt-color);
+    border: #423c38;
+    border: 3px solid;
+    box-shadow: var(--shadow-1) 5px 5px;
+}
+
+.error {
+    border: 1px solid;
+    display: flex;
+	flex-direction: column;
+    padding: .45em 2.65em 3em;
+}
