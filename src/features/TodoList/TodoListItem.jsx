@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import TextInputWithLabel from "../../shared/TextInputWithLabel";
 import styles from './TodoListItem.module.css';
+import styled from 'styled-components';
+
+const StyledLabel = styled.label`
+    display:flex;
+    gap: 5px;
+`;
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -38,14 +44,15 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
                     </>
                 ) : (
                     <>
-                        <label>
+                        <StyledLabel>
                             <input 
                             type="checkbox" 
                             checked={todo.isCompleted} 
                             onChange={() => onCompleteTodo(todo.id)} 
                             />
-                        </label>
-                        <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+                            <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+                        </StyledLabel>
+                        
                     </>
                 )}              
             </form>

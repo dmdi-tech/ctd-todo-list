@@ -13,12 +13,16 @@ const StyledDiv = styled.div`
     flex-wrap: wrap;
 `;
 
+const StyledLabel = styled.label`
+    display:flex;
+    gap: 5px;
+`;
+
 const StyledButton = styled.button`
     font-style: ${(props) => (props.disabled ? 'italic' : 'normal')};
 `;
 
 const StyledSelect = styled.select`
-    display: flex; 
     gap: 10px;
 `;
 
@@ -37,7 +41,7 @@ function TodoViewForm({ sortDirection, setSortDirection, sortField, setSortField
     return (
         <StyledForm onSubmit={preventDefault}>
             <StyledDiv>
-                <label id="searchTodos">Search todos: 
+                <StyledLabel id="searchTodos">Search todos: 
                     <input
                         id="searchTodos"
                         type="text"
@@ -46,7 +50,7 @@ function TodoViewForm({ sortDirection, setSortDirection, sortField, setSortField
                         }}
                         value={localQueryString}
                     />  
-                </label>
+                </StyledLabel>
                 
                 <StyledButton
                     type="button"
@@ -56,7 +60,7 @@ function TodoViewForm({ sortDirection, setSortDirection, sortField, setSortField
                 </StyledButton>
             </StyledDiv>
             <StyledDiv>
-                <label id="sortBy">Sort By
+                <StyledLabel id="sortBy">Sort By
                     <StyledSelect 
                         id="sortBy"
                         onChange={(event) => {
@@ -67,10 +71,10 @@ function TodoViewForm({ sortDirection, setSortDirection, sortField, setSortField
                         <option value={"title"}>Title</option>
                         <option value={"createdTime"}>Time added</option>
                     </StyledSelect>
-                </label>
+                </StyledLabel>
                 
 
-                <label id="direction">Direction
+                <StyledLabel id="direction">Direction
                     <StyledSelect 
                         id="direction"
                         onChange={(event) => {
@@ -81,7 +85,7 @@ function TodoViewForm({ sortDirection, setSortDirection, sortField, setSortField
                         <option value={"asc"}>Ascending</option>
                         <option value={"desc"}>Descending</option>
                     </StyledSelect>
-                </label>
+                </StyledLabel>
             </StyledDiv>
         </StyledForm>
     );
