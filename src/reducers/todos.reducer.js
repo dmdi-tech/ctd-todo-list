@@ -11,7 +11,14 @@ const actions = {
     clearError: 'clearError',
 };
 
-const reducer = (state= initialState, action) => {
+const initialState = {
+    todoList: [],
+    isLoading: false,
+    isSaving: false,
+    error: '',
+};
+
+const reducer = (state = initialState, action) => {
     switch(action.type) {
         case actions.fetchTodos: {
             return {
@@ -20,7 +27,7 @@ const reducer = (state= initialState, action) => {
             };
         }       
         case actions.loadTodos: {
-            const todos = actions.records.map((record) =>{
+            const todos = action.records.map((record) =>{
                 const todo = {
                     title: record.fields.title,
                     id: record.id,
@@ -57,9 +64,9 @@ const reducer = (state= initialState, action) => {
         }
 
         case actions.addTodo: {
-            const savedTodo = { id:records[0].id, title: records[0].fields.title, isCompleted: true };
+            const savedTodo = { id: action.records[0].id, title: action.records[0].fields.title, isCompleted: true };
             
-            if (!records[0].fields.isCompleted) {
+            if (!action.records[0].fields.isCompleted) {
                 savedTodo.isCompleted = false;
             }
 
@@ -78,40 +85,49 @@ const reducer = (state= initialState, action) => {
             };
         }
 
+        case actions.revertTodo: 
         case actions.updateTodo: {
-            return {
-                ...state,
-            };
+            const updatedTodos = state.todoList.map((todo) => {
+                if (todo.id == action.editedTodo.id) {
+                    return {...editedTodo}; 
+                }
+                return todo;
+            });
+
+            const updatedState = {
+                ...state, 
+                todoList: updatedTodos,
+                error: action.error ? action.error.message : '',
+            }
+            
+            return updatedState;
         }
 
         case actions.completeTodo: {
-            return {
-                ...state,
-            };
-        }
+            const updatedTodos = state.todoList.map((todo) => {
+                if(todo.id === action.id) {
+                    return {...todo, isCompleted: true};
+                }
+                return todo;
+            });
 
-        case actions.revertTodo: {
             return {
                 ...state,
+                todoList: updatedTodos,
             };
         }
 
         case actions.clearError: {
             return {
                 ...state,
+                error: '',
             };
         }
+        
+        default:
+            return state;
     }
 };
 
-const initialState = {
-    todoList: [],
-    isLoading: false,
-    isSaving: false,
-    error: '',
-};
 
-
-
-
-export default { initialState, actions, reducer } ;
+export { initialState, actions, reducer } ;
