@@ -51,7 +51,7 @@ const reducer = (state = initialState, action) => {
         case actions.setLoadError: {
             return {
                 ...state,
-                errorMessage: action.error.message,
+                error: action.error.message,
                 isLoading: false,
             };
         }
@@ -89,7 +89,7 @@ const reducer = (state = initialState, action) => {
         case actions.updateTodo: {
             const updatedTodos = state.todoList.map((todo) => {
                 if (todo.id == action.editedTodo.id) {
-                    return {...editedTodo}; 
+                    return {...action.editedTodo}; 
                 }
                 return todo;
             });
