@@ -120,7 +120,7 @@ function App() {
       if(!resp.ok) throw new Error(todoState.error);
       
     } catch(error) {
-      dispatch({ type: todoActions.revertTodo, originalTodo: originalUpdatedTodos, error: error });
+      dispatch({ type: todoActions.revertTodo, editedTodo: editedTodo, error: error });
     }
   }
 
@@ -156,7 +156,7 @@ function App() {
       if(!resp.ok) throw new Error(todoState.error);
 
     } catch(error) {
-      dispatch({ type: todoActions.revertTodo, originalTodo: originalTodo, error: error  });
+      dispatch({ type: todoActions.revertTodo, editedTodo: editedTodo, error: error  });
     }
   };
 
