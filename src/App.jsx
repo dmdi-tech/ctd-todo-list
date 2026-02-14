@@ -1,9 +1,9 @@
 import './App.css';
-import TodoList from './features/TodoList/TodoList'
-import TodoForm from './features/TodoForm';
-import TodoViewForm from './features/TodoViewForm';
+import TodosPage from './pages/TodosPage';
+import Header from './shared/Header';
 import { useEffect, useState, useCallback, useReducer } from 'react';
 import styles from './App.module.css';
+import { Routes, Route } from 'react-router';
 
 // reducer imports
 import {
@@ -193,25 +193,36 @@ function App() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>My Todos</h1>
-      <TodoForm onAddTodo={addTodo} isSaving={todoState.isSaving}/>
-      <TodoList 
-        todoList={todoState.todoList} 
-        onCompleteTodo={completeTodo} 
-        onUpdateTodo={updateTodo} 
-        isLoading={todoState.isLoading}
-      />
+      <Header />
+      <Routes>
+        <Route 
+          path='/'
+          element={<TodosPage 
+            onAddTodo={addTodo}
+            isSaving={todoState.isSaving}
+            todoList={todoState.todoList}
+            onCompleteTodo={completeTodo} 
+            onUpdateTodo={updateTodo} 
+            isLoading={todoState.isLoading}
+            sortDirection={sortDirection}
+            setSortDirection={setSortDirection}
+            sortField={sortField}
+            setSortField={setSortField}
+            queryString={queryString}
+            setQueryString={setQueryString}
+          />}
+        />
 
-      {/* <hr></hr> */}
+        <Route 
+          path='/about'
+          element= {<h1>About</h1>}
+        />
 
-      <TodoViewForm 
-        sortDirection={sortDirection}
-        setSortDirection={setSortDirection}
-        sortField={sortField}
-        setSortField={setSortField}
-        queryString={queryString}
-        setQueryString={setQueryString}
-      />
+        <Route 
+          path='/\/*'
+          element= {<h1>Not Found</h1>}
+        />
+      </Routes>
 
       {todoState.error && (
         <div className={styles.error}>

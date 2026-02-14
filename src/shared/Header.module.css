@@ -1,0 +1,26 @@
+.active {
+    color: red;
+}
+
+.inactive {
+    color: black;
+}
+
+.title, h1 {
+    font-size: 45px;
+    font-weight: 900;
+    font-style: italic;
+    text-align: center;
+}
+
+.container {
+    position: relative;
+}
+
+nav {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: -15px;
+    gap: 10px;
+}
