@@ -11,6 +11,7 @@
     font-weight: 900;
     font-style: italic;
     text-align: center;
+    margin:20px;
 }
 
 .container {
@@ -20,7 +21,7 @@
 nav {
     display: flex;
     position: absolute;
-    top: 10px;
+    top: -15px;
     right: -15px;
     gap: 10px;
 }

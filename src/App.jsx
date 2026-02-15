@@ -4,6 +4,8 @@ import Header from './shared/Header';
 import { useEffect, useState, useCallback, useReducer } from 'react';
 import styles from './App.module.css';
 import { Routes, Route } from 'react-router';
+import About from './pages/About';
+import NotFound from './pages/NotFound';
 
 // reducer imports
 import {
@@ -215,12 +217,12 @@ function App() {
 
         <Route 
           path='/about'
-          element= {<h1>About</h1>}
+          element= {<About />}
         />
 
         <Route 
-          path='/\/*'
-          element= {<h1>Not Found</h1>}
+          path='*'
+          element= {<NotFound />}
         />
       </Routes>
 
