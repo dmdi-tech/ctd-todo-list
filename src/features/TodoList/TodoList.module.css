@@ -2,3 +2,14 @@
     list-style: none;
 	padding: 0;
 }
+
+.paginationControls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
